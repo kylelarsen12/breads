@@ -1,7 +1,7 @@
 const React = require("react");
 const Default = require("./layouts/default");
 
-function Show({ bread }) {
+function Show({ bread, index }) {
   console.log(bread.name);
   return (
     <Default>
@@ -14,6 +14,10 @@ function Show({ bread }) {
       <li>
         <a href="/breads">Go home</a>
       </li>
+
+      <form action={`/breads/${index}?_method=DELETE`}>
+        <input type="submit" value="DELETE"></input>
+      </form>
     </Default>
   );
 }
