@@ -19,7 +19,7 @@ function Edit({ bread, index }) {
           type="text"
           name="image"
           id="image"
-          defaultValue="bread.image"
+          defaultValue={bread.image}
         ></input>
         <label htmlFor="hasGluten">Has Gluten?</label>
         <input
