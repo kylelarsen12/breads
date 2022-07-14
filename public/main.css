@@ -7,3 +7,7 @@ img {
   display: block;
   margin: auto;
 }
+
+h2 a {
+  text-decoration: none;
+}

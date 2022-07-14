@@ -9,7 +9,9 @@ function error404() {
         src="https://www.akc.org/wp-content/uploads/2019/07/do-dogs-grieve-other-dogs-500x486.jpg"
         alt="404 sad dog"
       />
-      <h2>Page not found, go back?</h2>
+      <h2>
+        Page not found, <a href="/breads">go back?</a>
+      </h2>
       <li>
         <a href="/breads">Go home</a>
       </li>

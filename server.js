@@ -1,9 +1,19 @@
-//Require modules
+//Require dependencies
 const express = require("express");
 require("dotenv").config();
 const PORT = process.env.PORT;
 const app = express();
 const methodOverride = require("method-override");
+const mongoose = require("mongoose");
+
+//MongoDB Integration
+mongoose.connect(
+  process.env.MONGO_URI,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => {
+    console.log("connected to mongo: ", process.env.MONGO_URI);
+  }
+);
 
 //MIDDLEWARE
 app.set("views", __dirname + "/views");

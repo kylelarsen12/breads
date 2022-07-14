@@ -1,4 +1,4 @@
-module.exports = [
+/*module.exports = [
   {
     name: "Rye",
     hasGluten: true,
@@ -24,3 +24,26 @@ module.exports = [
       "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80",
   },
 ];
+*/
+
+//Dependencies
+const mongoose = require("mongoose");
+//schema constructor
+const { Schema } = mongoose;
+
+//bread schema blueprint
+const breadSchema = new Schema({
+  name: { type: String, required: true },
+  hasGluten: Boolean,
+  image: {
+    type: String,
+    default:
+      "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+  },
+});
+
+//Create bread model
+const Bread = mongoose.model("Bread", breadSchema);
+
+//Export model
+module.exports = Bread;
