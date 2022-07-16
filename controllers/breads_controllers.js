@@ -15,18 +15,24 @@ breads.get("/new", (req, res) => {
   res.render("new");
 });
 
-//EDIT
-breads.get("/:indexArray/edit", (req, res) => {
-  res.render("edit", {
-    bread: Bread[req.params.indexArray],
-    index: req.params.indexArray,
-  });
+//GET EDIT
+breads.get("/:id/edit", (req, res) => {
+  Bread.findById(req.params.id)
+    .then((foundBread) => {
+      res.render("edit", { bread: foundBread });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("error404");
+    });
 });
 
 //SHOW
 breads.get("/:id", (req, res) => {
   Bread.findById(req.params.id)
     .then((foundBread) => {
+      const bakedBy = foundBread.getBakedBy();
+      console.log(bakedBy);
       res.render("show", { bread: foundBread });
     })
     .catch((err) => {
@@ -49,20 +55,31 @@ breads.post("/", (req, res) => {
 });
 
 //DELETE
-breads.delete("/:indexArray", (req, res) => {
-  Bread.splice(req.params.indexArray, 1);
-  res.status(303).redirect("/breads");
+breads.delete("/:id", (req, res) => {
+  Bread.findByIdAndDelete(req.params.id)
+    .then((deletedBread) => {
+      console.log(deletedBread);
+      res.status(303).redirect("/breads");
+    })
+    .catch((err) => res.render("error404"));
 });
 
 //UPDATE
-breads.put("/:arrayIndex", (req, res) => {
+breads.put("/:id", (req, res) => {
   if (req.body.hasGluten === "on") {
     req.body.hasGluten = true;
   } else {
     req.body.hasGluten = false;
   }
-  Bread[req.params.arrayIndex] = req.body;
-  res.redirect(`/breads/${req.params.arrayIndex}`);
+  Bread.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then((updatedBread) => {
+      console.log(updatedBread);
+      res.redirect(`/breads/${req.params.id}`);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.render("error404");
+    });
 });
 
 module.exports = breads;
