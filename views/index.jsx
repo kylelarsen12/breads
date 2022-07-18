@@ -12,6 +12,7 @@ function Index({ breads, title }) {
           return (
             <li key={index}>
               <a href={`/breads/${bread.id}`}>{bread.name}</a>
+              <li style={{ listStyle: "none" }}>{bread.getBakedBy()}</li>
             </li>
           );
         })}
