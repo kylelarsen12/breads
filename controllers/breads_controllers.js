@@ -6,8 +6,14 @@ const Baker = require("../models/baker.js");
 
 //Index
 breads.get("/", (req, res) => {
-  Bread.find().then((foundBreads) => {
-    res.render("index", { breads: foundBreads, title: "Index Page" });
+  Baker.find().then((foundBakers) => {
+    Bread.find().then((foundBreads) => {
+      res.render("index", {
+        breads: foundBreads,
+        bakers: foundBakers,
+        title: "Index Page",
+      });
+    });
   });
 });
 
@@ -20,9 +26,14 @@ breads.get("/new", (req, res) => {
 
 //GET EDIT
 breads.get("/:id/edit", (req, res) => {
-  Bread.findById(req.params.id)
-    .then((foundBread) => {
-      res.render("edit", { bread: foundBread });
+  Baker.find()
+    .then((foundBakers) => {
+      Bread.findById(req.params.id).then((foundBread) => {
+        res.render("edit", {
+          bread: foundBread,
+          bakers: foundBakers,
+        });
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -33,10 +44,14 @@ breads.get("/:id/edit", (req, res) => {
 //SHOW
 breads.get("/:id", (req, res) => {
   Bread.findById(req.params.id)
+    .populate("baker")
     .then((foundBread) => {
-      res.render("show", { bread: foundBread });
+      res.render("show", {
+        bread: foundBread,
+      });
     })
     .catch((err) => {
+      console.log(err);
       res.render("error404");
     });
 });
@@ -74,7 +89,6 @@ breads.put("/:id", (req, res) => {
   }
   Bread.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then((updatedBread) => {
-      console.log(updatedBread);
       res.redirect(`/breads/${req.params.id}`);
     })
     .catch((err) => {

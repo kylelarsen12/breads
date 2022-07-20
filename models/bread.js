@@ -1,5 +1,6 @@
 //Dependencies
 const mongoose = require("mongoose");
+const Baker = require("./baker.js");
 //schema constructor
 const { Schema } = mongoose;
 
@@ -13,18 +14,23 @@ const breadSchema = new Schema({
   },
   baker: {
     type: Schema.Types.ObjectID,
-    ref: "Baker",
+    //prettier-ignore
+    ref: 'baker',
   },
 });
 
 //Helper methods
 breadSchema.methods.getBakedBy = function () {
-  return `${this.name} was baked with pure hatred by ${this.baker}`;
+  console.log(this.baker.name);
+  //prettier-ignore
+  return `${this.name} was baked with pure hatred by ${this.baker.name}, who has been with us since ${this.baker.startDate}`;
 };
 
+/*
 breadSchema.static.findByBaker = function () {
   return this.find({ baker: "Ross" });
-};
+};*/
+
 //Create bread model
 const Bread = mongoose.model("Bread", breadSchema);
 
