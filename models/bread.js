@@ -13,9 +13,9 @@ const breadSchema = new Schema({
     default: "/images/sometypeofway.jpg",
   },
   baker: {
-    type: Schema.Types.ObjectID,
+    type: mongoose.Schema.ObjectId,
     //prettier-ignore
-    ref: 'baker',
+    ref: 'Baker',
   },
 });
 
@@ -23,7 +23,7 @@ const breadSchema = new Schema({
 breadSchema.methods.getBakedBy = function () {
   console.log(this.baker.name);
   //prettier-ignore
-  return `${this.name} was baked with pure hatred by ${this.baker.name}, who has been with us since ${this.baker.startDate}`;
+  return `${this.name} was baked with pure hatred by ${this.baker.name}, who has been with us since ${this.baker.startDate.getFullYear()}`;
 };
 
 /*

@@ -27,5 +27,15 @@ baker.get("/:id", (req, res) => {
     });
 });
 
+//DELETE
+baker.delete("/:id", (req, res) => {
+  Baker.findByIdAndDelete(req.params.id)
+    .then((deletedBaker) => {
+      console.log(deletedBaker);
+      res.status(303).redirect("/breads");
+    })
+    .catch(() => res.render("error404"));
+});
+
 //export
 module.exports = baker;
