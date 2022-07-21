@@ -29,7 +29,9 @@ bakerSchema.virtual("breads", {
 
 //hooks
 bakerSchema.post("findOneAndDelete", function () {
-  console.log(this);
+  Bread.deleteMany({ baker: this._conditions._id }).then((deleteStatus) => {
+    console.log(deleteStatus);
+  });
 });
 
 //create model and export
